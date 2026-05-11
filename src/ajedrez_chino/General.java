@@ -1,0 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ajedrez_chino;
+
+import java.awt.Color;
+
+/**
+ *
+ * @author CarlosXl
+ */
+public class General extends cdp {
+
+    public General(boolean team, int fila, int columna) {
+        super(team ? "R" : "r", team, fila, columna, team ? "src/ajedrez_chino/Piezas/General.png":"src/ajedrez_chino/Piezas/General-Azul.png");
+    }
+
+    
+
+    @Override
+    public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
+        if (nuevaCol < 3 || nuevaCol > 5) {
+            return false;
+        }
+        
+        int difFila = Math.abs(nuevaFila - fila);
+        int difCol = Math.abs(nuevaCol - col);
+        
+        return (difFila == 1 && difCol == 0) || (difFila == 0 && difCol == 1);
+        
+        
+        
+    }
+    
+}
