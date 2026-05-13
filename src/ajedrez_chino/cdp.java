@@ -25,6 +25,7 @@ public abstract class cdp {
         this.color = color;
         this.fila = fila;
         this.col = col;
+        this.team=team;
         this.color = team ? Color.RED : Color.BLACK;
         
         Image img = new ImageIcon(rutaImagen).getImage();

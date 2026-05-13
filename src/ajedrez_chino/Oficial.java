@@ -5,6 +5,7 @@
 package ajedrez_chino;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Oficial extends cdp{
     @Override
     public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
         if (nuevaCol < 3 || nuevaCol > 5) {
+            JOptionPane.showMessageDialog(null, "Esta afuera del limite del palacio ");
             return false;
         }
         

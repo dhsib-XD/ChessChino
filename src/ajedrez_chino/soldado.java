@@ -19,24 +19,33 @@ public class soldado extends cdp {
     }
     
     @Override
-    public boolean vmove(int nuevaFila, int nuevaColumna, cdp[][] tablero) {
-        int difFila = nuevaFila - fila;
-        int difCol = Math.abs(nuevaColumna - col);
+   public boolean vmove(int nuevaFila, int nuevaColumna, cdp[][] tablero) {
+    int difFila = nuevaFila - fila;
+    int difCol  = Math.abs(nuevaColumna - col);
+
+    if (team) {
         
-        if (team) {
+        boolean rio = fila <= 4;
+
+        if (!rio) {
            
-            if (fila > 4) { 
-                return difFila == -1 && difCol == 0;
-            } else { 
-                return (difFila == -1 && difCol == 0) || (difFila == 0 && difCol == 1);
-            }
+            return difFila == -1 && difCol == 0;
         } else {
-            
-            if (fila < 5) { 
-                return difFila == 1 && difCol == 0;
-            } else { 
-                return (difFila == 1 && difCol == 0) || (difFila == 0 && difCol == 1);
-            }
+           
+            return (difFila == -1 && difCol == 0) || (difFila == 0 && difCol == 1);
+        }
+
+    } else {
+        
+        boolean rio = fila >= 5;
+
+        if (!rio) {
+           
+            return difFila == 1 && difCol == 0;
+        } else {
+           
+            return (difFila == 1 && difCol == 0) || (difFila == 0 && difCol == 1);
         }
     }
+}
 }

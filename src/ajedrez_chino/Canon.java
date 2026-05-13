@@ -20,7 +20,32 @@ public class Canon extends cdp{
 
     @Override
     public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (fila != nuevaFila && col != nuevaCol) {
+            return false;
+        }
+        
+        if (fila == nuevaFila) {
+            int max = Math.max(fila, nuevaFila);
+            int min = Math.min(fila, nuevaFila);
+                    
+            for (int i = min; i < max; i++) {
+                if (tablero[fila][i] != null) {
+                    return false;
+                }   
+            }
+}else{
+            int max = Math.max(col, nuevaCol);
+            int min = Math.min(col, nuevaCol);
+        for (int i = min; i < max; i++) {
+                    if (tablero[i][col] != null) {
+                        return false;
+                        
+                
+            }
+                    }
     }
+        return true;
+    
+}
     
 }

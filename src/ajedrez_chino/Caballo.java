@@ -21,7 +21,30 @@ public class Caballo extends cdp{
 
     @Override
     public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    int difFila = nuevaFila - fila;
+    int difCol  = nuevaCol  - col;
+
+    
+
+    if (Math.abs(difFila) == 2 && Math.abs(difCol) == 1) {
+        
+        int filaMedio = fila + (difFila > 0 ? 1 : -1);
+        if (tablero[filaMedio][col] != null) {
+            return false; 
+        }
+
+    } else if (Math.abs(difFila) == 1 && Math.abs(difCol) == 2) {
+      
+        int colMedio = col + (difCol > 0 ? 1 : -1);
+        if (tablero[fila][colMedio] != null) {
+            return false; 
+        }
+
+    } else {
+        return false; 
     }
+
+    return true;
+}
     
 }

@@ -5,6 +5,7 @@
 package ajedrez_chino;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,17 +21,60 @@ public class General extends cdp {
 
     @Override
     public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
-        if (nuevaCol < 3 || nuevaCol > 5) {
-            return false;
-        }
-        
-        int difFila = Math.abs(nuevaFila - fila);
-        int difCol = Math.abs(nuevaCol - col);
-        
-        return (difFila == 1 && difCol == 0) || (difFila == 0 && difCol == 1);
-        
-        
-        
+    
+    // Restricción del palacio (columnas 3-5)
+    if (nuevaCol < 3 || nuevaCol > 5) {
+        return false;
     }
     
+    // Restricción de filas según equipo
+    if (team) {
+        if (nuevaFila < 7 || nuevaFila > 9) return false;
+    } else {
+        if (nuevaFila < 0 || nuevaFila > 2) return false;
+    }
+    
+    // Movimiento de 1 casilla ortogonal
+    int difFila = Math.abs(nuevaFila - fila);
+    int difCol  = Math.abs(nuevaCol  - col);
+    if (!((difFila == 1 && difCol == 0) || (difFila == 0 && difCol == 1))) {
+        return false;
+    }
+    
+   
+    int filaC = -1;
+    int colC  = -1;
+
+    for (int i = 0; i < tablero.length; i++) {
+        for (int j = 3; j <= 5; j++) {
+            if (tablero[i][j] != null && tablero[i][j].Team() != team && tablero[i][j].getClass().getSimpleName().equals("General")) {
+                filaC = i;
+                colC  = j;
+                break;
+            }
+        }
+        if (filaC != -1) break;
+    }
+    
+   
+    if (filaC != -1 && nuevaCol == colC) {
+        boolean bloqueo = false;
+        
+        int filaMin = Math.min(nuevaFila, filaC) + 1;
+        int filaMax = Math.max(nuevaFila, filaC) - 1;
+        
+        for (int f = filaMin; f <= filaMax; f++) {
+            if (tablero[f][nuevaCol] != null) {
+                bloqueo = true;
+                break;
+            }
+        }
+        
+        if (!bloqueo) return false;
+    }
+    
+    return true;
 }
+    
+}
+
