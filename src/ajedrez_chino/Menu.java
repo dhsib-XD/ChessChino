@@ -11,15 +11,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author CarlosXl
  */
-public class Menu {
+public class Menu extends dp {
     Menu_Inicio me = new Menu_Inicio();
   public void menuj() {
-    dp dp = new dp();
+      
+      game gm = new game();
+    
 
     JFrame inicio = new JFrame("Ajedrez Chino");
     inicio.setSize(560, 680);
@@ -35,13 +38,22 @@ public class Menu {
     JButton bj = new JButton("JUGAR");
     bj.setBounds(210, 200, 120, 40);
     bj.addActionListener(e -> {
+        
+        if (totalUsuarios >= 2) {
+            ;
+            
+            
+            
+        }else {
+            JOptionPane.showMessageDialog(null, "No hay suficientes usuarios para la partida");
+        }
        
     });
 
     JButton bc = new JButton("MI CUENTA");
     bc.setBounds(210, 260, 120, 40);
     bc.addActionListener(e -> {
-        dp.MICUENTA(); 
+        MICUENTA(); 
         inicio.dispose();
     });
 

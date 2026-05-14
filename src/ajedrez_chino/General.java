@@ -22,12 +22,12 @@ public class General extends cdp {
     @Override
     public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
     
-    // Restricción del palacio (columnas 3-5)
+  
     if (nuevaCol < 3 || nuevaCol > 5) {
         return false;
     }
     
-    // Restricción de filas según equipo
+    
     if (team) {
         if (nuevaFila < 7 || nuevaFila > 9) return false;
     } else {

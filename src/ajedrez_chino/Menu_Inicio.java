@@ -17,8 +17,8 @@ import javax.swing.JLabel;
  * @author CarlosXl
  */
 public class Menu_Inicio extends dp {
-    public void menui(){
-        dp dato = new dp();
+    final void menui(){
+        
         
         Login l = new Login();
         
@@ -36,7 +36,8 @@ public class Menu_Inicio extends dp {
         
         JButton player =new JButton("NEW PLAYER");
         player.setBounds(190,270,120,40);
-        player.addActionListener(e -> dato.nuevo());
+        player.addActionListener(e -> nuevo());
+        
         player.addActionListener(e -> mi.dispose());
         
         JLabel tt = new JLabel("AJEDREZ CHINO");

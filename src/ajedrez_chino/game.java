@@ -17,7 +17,7 @@ public class game {
         a.tablero();
     }
 
-    public void tablero() {
+    final void tablero() {
         JOptionPane.showMessageDialog(null, "Comienza las fichas Blancas y luego las fichas Azules");
         JFrame tab = new JFrame();
         tab.setSize(560, 720);
@@ -125,59 +125,68 @@ public class game {
 
                 
                 cel.addActionListener(e -> {
-                    if (seleccion[0] == -1) {
-                        
-                        if (fichas[fi][fj] == null) return;
-                        if (fichas[fi][fj].Team() != turns) {
-                            JOptionPane.showMessageDialog(tab, "No es tu turno");
-                            return;
-                        }
-                        seleccion[0] = fi;
-                        seleccion[1] = fj;
-                        cel.setBackground(Color.CYAN);
+    if (seleccion[0] == -1) {
 
-                    } else {
-                        int a = seleccion[0];
-                        int b = seleccion[1];
+        if (fichas[fi][fj] == null) return;
+        if (fichas[fi][fj].Team() != turns) {
+            JOptionPane.showMessageDialog(tab, "No es tu turno");
+            return;
+        }
+        seleccion[0] = fi;
+        seleccion[1] = fj;
+        cel.setBackground(Color.CYAN);
 
-                      
-                        if (a == fi && b == fj) {
-                            restaurarColor(botones[a][b], a, b);
-                            seleccion[0] = -1;
-                            seleccion[1] = -1;
-                            return;
-                        }
+    } else {
+        int a = seleccion[0];
+        int b = seleccion[1];
 
-                       
-                        if (fichas[fi][fj] != null && fichas[fi][fj].Team() == fichas[a][b].Team()) {
-                            JOptionPane.showMessageDialog(tab, "No puedes capturar tu propia ficha");
-                            restaurarColor(botones[a][b], a, b);
-                            seleccion[0] = -1;
-                            seleccion[1] = -1;
-                            return;
-                        }
+        
+        if (a == fi && b == fj) {
+            restaurarColor(botones[a][b], a, b);
+            seleccion[0] = -1;
+            seleccion[1] = -1;
+            return;
+        }
 
-                        
-                        if (fichas[a][b].vmove(fi, fj, fichas)) {
-                            fichas[fi][fj] = fichas[a][b];
-                            fichas[fi][fj].mover(fi, fj);
-                            fichas[a][b] = null;
+        
+        if (fichas[fi][fj] != null && fichas[fi][fj].Team() == fichas[a][b].Team()) {
+            JOptionPane.showMessageDialog(tab, "No puedes capturar tu propia ficha");
+            restaurarColor(botones[a][b], a, b);
+            seleccion[0] = -1;
+            seleccion[1] = -1;
+            return;
+        }
 
-                            Image img = fichas[fi][fj].getImagen().getImage();
-                            Image imgE = img.getScaledInstance(size - 5, size - 5, Image.SCALE_SMOOTH);
-                            botones[fi][fj].setIcon(new ImageIcon(imgE));
-                            botones[a][b].setIcon(null);
+        
+        if (fichas[a][b].vmove(fi, fj, fichas)) {
+            fichas[fi][fj] = fichas[a][b];
+            fichas[fi][fj].mover(fi, fj);
+            fichas[a][b] = null;
 
-                            turns = !turns;
-                        } else {
-                            JOptionPane.showMessageDialog(tab, "Movimiento invalido");
-                        }
+            Image img = fichas[fi][fj].getImagen().getImage();
+            Image imgE = img.getScaledInstance(size - 5, size - 5, Image.SCALE_SMOOTH);
+            botones[fi][fj].setIcon(new ImageIcon(imgE));
+            botones[a][b].setIcon(null);
 
-                        restaurarColor(botones[a][b], a, b);
-                        seleccion[0] = -1;
-                        seleccion[1] = -1;
-                    }
-                });
+            
+            if (verificarGanador(fichas)) {
+                String ganador = turns ? "BLANCAS" : "AZULES";
+                JOptionPane.showMessageDialog(tab, "¡Ganaron las " + ganador + "!");
+                tab.dispose();
+                return;
+            }
+
+            turns = !turns;
+
+        } else {
+            JOptionPane.showMessageDialog(tab, "Movimiento invalido");
+        }
+
+        restaurarColor(botones[a][b], a, b);
+        seleccion[0] = -1;
+        seleccion[1] = -1;
+    }
+});
 
                 tab.add(cel);
             }
@@ -197,4 +206,22 @@ public class game {
             btn.setBackground(new Color(240, 230, 180));
         }
     }
+    
+    private boolean verificarGanador(cdp[][] fichas) {
+    boolean generalNegro  = false;
+    boolean generalBlanco = false;
+
+   
+    for (int i = 0; i < fichas.length; i++) {
+        for (int j = 0; j < fichas[i].length; j++) {
+            if (fichas[i][j] instanceof General) {
+                if (fichas[i][j].Team() == false) generalNegro  = true;
+                if (fichas[i][j].Team() == true)  generalBlanco = true;
+            }
+        }
+    }
+
+   
+    return !generalNegro || !generalBlanco;
+}
 }

@@ -18,11 +18,11 @@ import javax.swing.JTextField;
  *
  * @author CarlosXl
  */
-public class dp {
+public class dp  {
    static String noms[] = new String[100]; 
     static String contras[] = new String[100]; 
     static int totalUsuarios = 0; 
-    static int jugador_Actual;
+    static int Jactual;
 
     public void nuevo() {
         Menu_Inicio m = new Menu_Inicio();
@@ -113,23 +113,21 @@ public class dp {
         if (noms[a].equals(usu)) {
             return false;
         }
-        // Recursividad: revisa el siguiente
+        
         return revU(a + 1, usu, contra);
     }
     
-    public boolean verificar(int a, String usu, String contra) {
-        
-        if (a >= totalUsuarios) {
-            return false;
-        }
-        
-        if (noms[a].equals(usu) && contras[a].equals(contra)) {
-            jugador_Actual = a;
-            return true;
-        }
-        
-        return verificar(a + 1, usu, contra);
+   public boolean verificar(int a, String usu, String contra) {
+    
+    if (a < 0) {
+        return false;
     }
+    if (noms[a].equals(usu) && contras[a].equals(contra)) {
+        Jactual = a;
+        return true;
+    }
+    return verificar(a - 1, usu, contra);
+}
     
     public void MICUENTA() {
     JFrame datos = new JFrame();
@@ -226,7 +224,7 @@ public class dp {
         }
 
        
-        if (!contras[jugador_Actual].equals(actual_c)) {
+        if (!contras[Jactual].equals(actual_c)) {
             JOptionPane.showMessageDialog(tt, "El password actual es incorrecto");
             return;
         }
@@ -238,7 +236,7 @@ public class dp {
         }
 
 
-        contras[jugador_Actual] = nuevo_c;
+        contras[Jactual] = nuevo_c;
         JOptionPane.showMessageDialog(tt, "¡Password cambiado exitosamente!");
         tt.dispose(); 
     });
@@ -296,19 +294,18 @@ public class dp {
         }
 
         
-        if (contras[jugador_Actual].equals(c)) {
+        if (contras[Jactual].equals(c)) {
 
             
-            for (int i = jugador_Actual; i < totalUsuarios - 1; i++) {
+            for (int i = Jactual; i < totalUsuarios - 1; i++) {
                 noms[i] = noms[i + 1];
                 contras[i] = contras[i + 1];
             }
 
-            // Limpiar el último espacio
             noms[totalUsuarios - 1] = null;
             contras[totalUsuarios - 1] = null;
             totalUsuarios--;       
-            jugador_Actual = -1;    
+            Jactual = -1;    
 
             JOptionPane.showMessageDialog(ce, "¡Cuenta eliminada!");
             ce.dispose(); 

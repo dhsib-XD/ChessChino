@@ -19,33 +19,45 @@ public class Canon extends cdp{
    
 
     @Override
-    public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
-        if (fila != nuevaFila && col != nuevaCol) {
-            return false;
-        }
-        
-        if (fila == nuevaFila) {
-            int max = Math.max(fila, nuevaFila);
-            int min = Math.min(fila, nuevaFila);
-                    
-            for (int i = min; i < max; i++) {
-                if (tablero[fila][i] != null) {
-                    return false;
-                }   
-            }
-}else{
-            int max = Math.max(col, nuevaCol);
-            int min = Math.min(col, nuevaCol);
-        for (int i = min; i < max; i++) {
-                    if (tablero[i][col] != null) {
-                        return false;
-                        
-                
-            }
-                    }
-    }
-        return true;
+public boolean vmove(int nuevaFila, int nuevaCol, cdp[][] tablero) {
     
+   
+    if (fila != nuevaFila && col != nuevaCol) {
+        return false;
+    }
+
+    int piezasmid = 0;
+
+    
+    if (fila == nuevaFila) {
+        int min = Math.min(col, nuevaCol);
+        int max = Math.max(col, nuevaCol);
+
+        for (int i = min + 1; i < max; i++) {
+            if (tablero[fila][i] != null) {
+                piezasmid++;
+            }
+        }
+
+    
+    } else {
+        int min = Math.min(fila, nuevaFila);
+        int max = Math.max(fila, nuevaFila);
+
+        for (int i = min + 1; i < max; i++) {
+            if (tablero[i][col] != null) {
+                piezasmid++;
+            }
+        }
+    }
+
+    
+    if (tablero[nuevaFila][nuevaCol] == null) {
+        return piezasmid == 0; 
+    }
+
+    
+    return piezasmid == 1; 
 }
     
 }
