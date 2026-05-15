@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Menu extends dp {
     Menu_Inicio me = new Menu_Inicio();
+    
   public void menuj() {
       
       game gm = new game();
@@ -39,16 +40,20 @@ public class Menu extends dp {
     bj.setBounds(210, 200, 120, 40);
     bj.addActionListener(e -> {
         
-        if (totalUsuarios >= 2) {
-            ;
-            
-            
-            
-        }else {
-            JOptionPane.showMessageDialog(null, "No hay suficientes usuarios para la partida");
-        }
-       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     });
+   
 
     JButton bc = new JButton("MI CUENTA");
     bc.setBounds(210, 260, 120, 40);

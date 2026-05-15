@@ -4,6 +4,8 @@
  */
 package ajedrez_chino;
 
+
+
 /**
  *
  * @author CarlosXl
@@ -11,6 +13,10 @@ package ajedrez_chino;
 public class Ajedrez_Chino {
     public static void main(String[] args) {
         Menu_Inicio a = new Menu_Inicio();
+        
+        
+         
+       
         a.menui();
         
     }

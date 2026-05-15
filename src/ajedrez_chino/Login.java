@@ -66,7 +66,7 @@ public class Login extends dp {
             return;
         }
 
-        if (verificar(0, user, pass)) {
+        if (verificar(totalUsuarios - 1, user, pass)) {
             JOptionPane.showMessageDialog(log, "¡Bienvenido " + user + "!");
             mm.menuj();
             log.dispose();

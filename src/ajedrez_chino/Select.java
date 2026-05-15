@@ -10,7 +10,7 @@ package ajedrez_chino;
  */
 public class Select {
     
-    public void jugadores(){
+    public void confi(){
         
     }
 }
