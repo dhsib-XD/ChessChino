@@ -21,7 +21,7 @@ public class Menu extends dp {
     Menu_Inicio me = new Menu_Inicio();
     
   public void menuj() {
-      
+     
       game gm = new game();
     
 
@@ -39,16 +39,29 @@ public class Menu extends dp {
     JButton bj = new JButton("JUGAR");
     bj.setBounds(210, 200, 120, 40);
     bj.addActionListener(e -> {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+         boolean find = false;
+        if (totalUsuarios >= 2 ) {
+           String p2 = JOptionPane.showInputDialog(null,"Ingrese el nombre del segundo jugador ");
+           
+            for (int i = 0; i < totalUsuarios; i++) {
+                if (jugadores[i].equals(p2)) {
+                    find = true;
+                    
+                }
+            }
+            
+            if (find) {
+                JOptionPane.showInputDialog(null,"Ingrese la contrasena del usuario   ");
+                
+                
+            }else{
+                
+            }
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay suficientes jugadores registrados");
+        }
         
         
         

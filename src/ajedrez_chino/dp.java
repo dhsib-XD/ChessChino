@@ -157,7 +157,7 @@ public class dp {
         fondo.setBounds(0, 0, 500, 500);
         datos.add(fondo);
 
-        datos.setVisible(true); // ✅ al final
+        datos.setVisible(true); 
     }
 
     public void cambio() {
@@ -230,7 +230,7 @@ public class dp {
         fondo.setBounds(0, 0, 500, 500);
         tt.add(fondo);
 
-        tt.setVisible(true); // ✅ al final
+        tt.setVisible(true);
     }
 
     public void cerrar() {
