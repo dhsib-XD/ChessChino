@@ -17,7 +17,7 @@ import javax.swing.JLabel;
  * @author CarlosXl
  */
 public class Menu_Inicio extends dp {
-    final void menui(){
+    public void menui(){
         
         
         Login l = new Login();

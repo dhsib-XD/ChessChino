@@ -10,14 +10,10 @@ package ajedrez_chino;
  *
  * @author CarlosXl
  */
-public class Ajedrez_Chino {
+public class Ajedrez_Chino extends Menu_Inicio {
     public static void main(String[] args) {
-        Menu_Inicio a = new Menu_Inicio();
-        
-        
-         
-       
-        a.menui();
+        Menu_Inicio m = new Menu_Inicio();
+        m.menui();
         
     }
         

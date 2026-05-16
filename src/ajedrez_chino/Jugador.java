@@ -1,32 +1,52 @@
 package ajedrez_chino;
 
-public class Jugador implements IJugador {
-    
+public final class Jugador implements IJugador {
     private String nombre;
     private String contrasena;
+    private String[] logs = new String[100];
+    private int totalLogs = 0;
+    private int puntos = 0; 
 
     public Jugador(String nombre, String contrasena) {
-        this.nombre = nombre;
+        this.nombre     = nombre;
         this.contrasena = contrasena;
     }
 
-    @Override
-    public String getNombre() {
-        return nombre;
+    @Override 
+    public String getNombre(){ 
+        return nombre; }
+    
+    @Override 
+    public String getContrasena(){ 
+        return contrasena; }
+    
+    @Override 
+    public void setContrasena(String nueva) {
+        this.contrasena = nueva; }
+    
+     public void agregarLog(String log) {
+        logs[totalLogs] = log;
+        totalLogs++;
     }
+    public String[] getLog()  { 
+        return logs; }
+    
+    public int getTotal()  { 
+        return totalLogs; }
+
+    
+    public int getPuntos() { 
+        return puntos; }
+    public void agregarPuntos(int p) { 
+        puntos += p; }
 
     @Override
-    public String getContrasena() {
-        return contrasena; // ✅ retorna el valor, no lanza excepción
-    }
+    public String toString() { 
+        return nombre; }
 
-    @Override
-    public void setContrasena(String nuevaContrasena) {
-        this.contrasena = nuevaContrasena; // ✅ asigna el valor
-    }
 
-    @Override
     public void mostrarDatos() {
-        System.out.println("Usuario: " + nombre); // ✅ implementado
+        System.out.println("Usuario: " + nombre); 
     }
+
 }

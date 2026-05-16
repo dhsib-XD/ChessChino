@@ -9,6 +9,8 @@ package ajedrez_chino;
 public interface IJugador {
     String getNombre();
     String getContrasena();
-    void setContrasena(String nuevaContra);
-    void mostrarDatos();
+    void setContrasena(String nueva);
+    void agregarLog(String log);
+    String[] getLog();      // 👈 debe estar aquí
+    int getTotal();      // 👈 debe estar aquí
 }
