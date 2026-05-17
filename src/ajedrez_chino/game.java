@@ -29,6 +29,7 @@ public class game {
     boolean turns = true;
     String jugadorBlanco;
     String jugadorAzul;
+    static int noms = 0;
 
     public game(String jugadorBlanco, String jugadorAzul) {
         this.jugadorBlanco = jugadorBlanco;
@@ -153,6 +154,9 @@ btnGuardar.addActionListener(e -> {
 
     dp.tpd++;
     JOptionPane.showMessageDialog(tab, "¡Partida guardada!");
+    Menu j = new Menu();
+    j.menuj();
+    tab.dispose();
 });
 tab.add(btnGuardar);
 

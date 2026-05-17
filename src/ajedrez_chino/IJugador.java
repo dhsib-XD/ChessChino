@@ -11,6 +11,6 @@ public interface IJugador {
     String getContrasena();
     void setContrasena(String nueva);
     void agregarLog(String log);
-    String[] getLog();      // 👈 debe estar aquí
-    int getTotal();      // 👈 debe estar aquí
+    String[] getLog();      
+    int getTotal();      
 }

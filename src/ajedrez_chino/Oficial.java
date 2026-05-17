@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class Oficial extends cdp{
 
     public Oficial(boolean team, int fila, int columna) {
-        super(team ? "O" : "o", team, fila, columna, team ? "src/ajedrez_chino/Piezas/Oficial.png":"src/ajedrez_chino/Piezas/Oficial-Azul.png");
+        super(team ? "Oficial Blanco" : "Oficial Azul", team, fila, columna, team ? "src/ajedrez_chino/Piezas/Oficial.png":"src/ajedrez_chino/Piezas/Oficial-Azul.png");
     }
 
     

@@ -13,7 +13,7 @@ import java.awt.Color;
 public class Caballo extends cdp{
 
     public Caballo(String nom, boolean team, int fila, int col) {
-        super(team ? "H" : "h", team, fila, col, team ? "src/ajedrez_chino/Piezas/Caballo.png":"src/ajedrez_chino/Piezas/Caballo-Azul.png");
+        super(team ? "Caballo Blanco" : "Caballo Azul", team, fila, col, team ? "src/ajedrez_chino/Piezas/Caballo.png":"src/ajedrez_chino/Piezas/Caballo-Azul.png");
     }
     
 

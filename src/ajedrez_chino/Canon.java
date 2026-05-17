@@ -13,7 +13,7 @@ import java.awt.Color;
 public class Canon extends cdp{
 
     public Canon(String nom, boolean team, int fila, int col) {
-        super(team ? "C" : "c", team, fila, col, team ? "src/ajedrez_chino/Piezas/Canon.png":"src/ajedrez_chino/Piezas/Canon-Azul.png");
+        super(team ? "Canon Blanco" : "Canon Azul", team, fila, col, team ? "src/ajedrez_chino/Piezas/Canon.png":"src/ajedrez_chino/Piezas/Canon-Azul.png");
     }
 
    

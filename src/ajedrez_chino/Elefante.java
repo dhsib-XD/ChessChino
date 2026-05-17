@@ -13,7 +13,7 @@ import java.awt.Color;
 public class Elefante extends cdp{
 
     public Elefante(String nom, boolean team, int fila, int col) {
-       super(team ? "E" : "e", team, fila, col, team ? "src/ajedrez_chino/Piezas/Elefante.png":"src/ajedrez_chino/Piezas/Elefante-Azul.png");
+       super(team ? "Elefante Blanco" : "Elefante Azul", team, fila, col, team ? "src/ajedrez_chino/Piezas/Elefante.png":"src/ajedrez_chino/Piezas/Elefante-Azul.png");
     }
 
     

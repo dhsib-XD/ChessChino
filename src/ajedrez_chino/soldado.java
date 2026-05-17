@@ -15,7 +15,7 @@ import java.awt.Color;
 public class soldado extends cdp {
     
     public soldado(boolean team, int fila, int columna) {
-        super(team ? "S" : "s", team, fila, columna, team ? "src/ajedrez_chino/Piezas/Soldado.png":"src/ajedrez_chino/Piezas/Soldado-Azul.png");
+        super(team ? "Soldado Blanco" : "Soldado Azul", team, fila, columna, team ? "src/ajedrez_chino/Piezas/Soldado.png":"src/ajedrez_chino/Piezas/Soldado-Azul.png");
     }
     
     @Override

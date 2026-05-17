@@ -139,6 +139,8 @@ public class dp {
         cerrar.setBounds(150, 260, 180, 40);
         cerrar.addActionListener(e -> {
             cerrar();
+            Menu_Inicio me = new Menu_Inicio();
+            me.menui();
             datos.dispose();
         });
 
@@ -261,6 +263,7 @@ public class dp {
         regresar.setBounds(250, 330, 120, 40);
         regresar.addActionListener(e -> {
             MICUENTA();
+            
             ce.dispose();
         });
 

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class General extends cdp {
 
     public General(boolean team, int fila, int columna) {
-        super(team ? "R" : "r", team, fila, columna, team ? "src/ajedrez_chino/Piezas/General.png":"src/ajedrez_chino/Piezas/General-Azul.png");
+        super(team ? "General Blanco" : "General Azul", team, fila, columna, team ? "src/ajedrez_chino/Piezas/General.png":"src/ajedrez_chino/Piezas/General-Azul.png");
     }
 
     
