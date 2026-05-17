@@ -10,6 +10,11 @@ public class dp {
     static IJugador[] jugadores = new IJugador[100];
     static int totalUsuarios = 0;
     static int Jactual;
+    
+     static cdp[][][] partidasGuardadas     = new cdp[100][10][9];
+    static String[]  nombrePartida         = new String[100];
+    static boolean[] turnoGuardado         = new boolean[100];
+    static int  tpd = 0;
 
     public void nuevo() {
         Menu_Inicio m = new Menu_Inicio();
@@ -213,6 +218,8 @@ public class dp {
 
             jugadores[Jactual].setContrasena(nuevo_c);
             JOptionPane.showMessageDialog(tt, "¡Password cambiado exitosamente!");
+            Menu m = new Menu();
+            m.menuj();
             tt.dispose();
         });
 

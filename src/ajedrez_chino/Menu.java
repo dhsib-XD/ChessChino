@@ -98,7 +98,7 @@ public class Menu extends dp {
         JButton br = new JButton("Reportes");
         br.setBounds(210, 320, 120, 40);
         br.addActionListener(e -> {
-            reportes(inicio); // 👈 Abrir reportes
+            reportes(inicio); 
         });
 
         JButton bl = new JButton("LOG OUT");
@@ -124,104 +124,174 @@ public class Menu extends dp {
     }
 
     public void reportes(JFrame anterior) {
-        JFrame rep = new JFrame("Reportes");
-        rep.setSize(560, 680);
-        rep.setLayout(null);
-        rep.setLocationRelativeTo(null);
-        rep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    JFrame rep = new JFrame("Reportes");
+    rep.setSize(560, 750);
+    rep.setLayout(null);
+    rep.setLocationRelativeTo(null);
+    rep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel titulo = new JLabel("REPORTES", JLabel.CENTER);
-        titulo.setBounds(0, 10, 540, 40);
-        titulo.setFont(new Font("Arial", Font.BOLD, 25));
-        titulo.setForeground(Color.WHITE);
-        rep.add(titulo);
+    JLabel titulo = new JLabel("REPORTES", JLabel.CENTER);
+    titulo.setBounds(0, 10, 540, 40);
+    titulo.setFont(new Font("Arial", Font.BOLD, 25));
+    titulo.setForeground(Color.WHITE);
+    rep.add(titulo);
 
-        
-        JLabel lblRanking = new JLabel("RANKING DE JUGADORES");
-        lblRanking.setBounds(20, 60, 250, 25);
-        lblRanking.setFont(new Font("Arial", Font.BOLD, 14));
-        lblRanking.setForeground(Color.WHITE);
-        rep.add(lblRanking);
+    
+    JLabel lblRanking = new JLabel("RANKING DE JUGADORES");
+    lblRanking.setBounds(20, 60, 250, 25);
+    lblRanking.setFont(new Font("Arial", Font.BOLD, 14));
+    lblRanking.setForeground(Color.WHITE);
+    rep.add(lblRanking);
 
-        JTextArea txtRanking = new JTextArea();
-        txtRanking.setEditable(false);
-        txtRanking.setFont(new Font("Courier New", Font.PLAIN, 13));
-        txtRanking.setBackground(new Color(240, 240, 240));
+    JTextArea txtRanking = new JTextArea();
+    txtRanking.setEditable(false);
+    txtRanking.setFont(new Font("Courier New", Font.PLAIN, 13));
+    txtRanking.setBackground(new Color(240, 240, 240));
+
+    // Ordenar por puntos
+    IJugador[] ordenados = new IJugador[dp.totalUsuarios];
+    for (int i = 0; i < dp.totalUsuarios; i++) {
+        ordenados[i] = dp.jugadores[i];
+    }
+
+    for (int i = 0; i < dp.totalUsuarios - 1; i++) {
+        for (int j = 0; j < dp.totalUsuarios - i - 1; j++) {
+            if (((Jugador) ordenados[j]).getPuntos() < ((Jugador) ordenados[j + 1]).getPuntos()) {
+                IJugador temp    = ordenados[j];
+                ordenados[j]     = ordenados[j + 1];
+                ordenados[j + 1] = temp;
+            }
+        }
+    }
+
+    txtRanking.append(String.format("%-5s %-15s %-10s%n", "POS", "USERNAME", "PUNTOS"));
+    txtRanking.append("─────────────────────────────\n");
+    for (int i = 0; i < dp.totalUsuarios; i++) {
+        txtRanking.append(String.format("%-5d %-15s %-10d%n",
+            i + 1,
+            ordenados[i].getNombre(),
+            ((Jugador) ordenados[i]).getPuntos()
+        ));
+    }
+
+    JScrollPane scrollRanking = new JScrollPane(txtRanking);
+    scrollRanking.setBounds(20, 90, 500, 150);
+    rep.add(scrollRanking);
+
+    
+    JLabel lblLogs = new JLabel("MIS ÚLTIMOS PARTIDOS");
+    lblLogs.setBounds(20, 250, 250, 25);
+    lblLogs.setFont(new Font("Arial", Font.BOLD, 14));
+    lblLogs.setForeground(Color.WHITE);
+    rep.add(lblLogs);
+
+    JTextArea txtLogs = new JTextArea();
+    txtLogs.setEditable(false);
+    txtLogs.setFont(new Font("Courier New", Font.PLAIN, 12));
+    txtLogs.setBackground(new Color(240, 240, 240));
+
+    String[] misLogs = dp.jugadores[dp.Jactual].getLog();
+    int total        = dp.jugadores[dp.Jactual].getTotal();
+
+    if (total == 0) {
+        txtLogs.append("No hay partidos registrados aún.");
+    } else {
+        for (int i = total - 1; i >= 0; i--) {
+            txtLogs.append((total - i) + ". " + misLogs[i] + "\n");
+            txtLogs.append("─────────────────────────────\n");
+        }
+    }
+
+    JScrollPane scrollLogs = new JScrollPane(txtLogs);
+    scrollLogs.setBounds(20, 280, 500, 170);
+    rep.add(scrollLogs);
+
+    
+    JLabel lblCargar = new JLabel("CARGAR PARTIDA");
+    lblCargar.setBounds(20, 460, 250, 25);
+    lblCargar.setFont(new Font("Arial", Font.BOLD, 14));
+    lblCargar.setForeground(Color.WHITE);
+    rep.add(lblCargar);
+
+    JTextArea txtPartidas = new JTextArea();
+    txtPartidas.setEditable(false);
+    txtPartidas.setFont(new Font("Courier New", Font.PLAIN, 12));
+    txtPartidas.setBackground(new Color(240, 240, 240));
+
+    if (dp.tpd== 0) {
+        txtPartidas.append("No hay partidas guardadas.");
+    } else {
+        for (int i = 0; i < dp.tpd; i++) {
+            txtPartidas.append((i + 1) + ". " + dp.nombrePartida[i] + "\n");
+        }
+    }
+
+    JScrollPane scrollPartidas = new JScrollPane(txtPartidas);
+    scrollPartidas.setBounds(20, 490, 380, 100);
+    rep.add(scrollPartidas);
+
+    JButton btnCargar = new JButton("CARGAR");
+    btnCargar.setBounds(410, 490, 110, 40);
+    btnCargar.setBackground(new Color(0, 150, 0));
+    btnCargar.setForeground(Color.WHITE);
+    btnCargar.setFont(new Font("Arial", Font.BOLD, 12));
+    btnCargar.addActionListener(e -> {
+
+        if (dp.tpd== 0) {
+            JOptionPane.showMessageDialog(rep, "No hay partidas guardadas");
+            return;
+        }
 
       
-        IJugador[] ordenados = new IJugador[dp.totalUsuarios];
-        for (int i = 0; i < dp.totalUsuarios; i++) {
-            ordenados[i] = dp.jugadores[i];
-        }
+        String input = JOptionPane.showInputDialog(rep,
+            "Ingrese el número de la partida a cargar (1-" + dp.tpd+ "):");
 
-        for (int i = 0; i < dp.totalUsuarios - 1; i++) {
-            for (int j = 0; j < dp.totalUsuarios - i - 1; j++) {
-                if (((Jugador) ordenados[j]).getPuntos() < ((Jugador) ordenados[j + 1]).getPuntos()) {
-                    IJugador temp  = ordenados[j];
-                    ordenados[j]   = ordenados[j + 1];
-                    ordenados[j + 1] = temp;
-                }
+        if (input == null || input.isEmpty()) return;
+
+        try {
+            int idx = Integer.parseInt(input) - 1;
+
+            if (idx < 0 || idx >= dp.tpd) {
+                JOptionPane.showMessageDialog(rep, "Número inválido");
+                return;
             }
-        }
 
-       
-        txtRanking.append(String.format("%-5s %-15s %-10s%n", "POS", "USERNAME", "PUNTOS"));
-        txtRanking.append("─────────────────────────────\n");
-        for (int i = 0; i < dp.totalUsuarios; i++) {
-            txtRanking.append(String.format("%-5d %-15s %-10d%n",
-                i + 1,
-                ordenados[i].getNombre(),
-                ((Jugador) ordenados[i]).getPuntos()
-            ));
-        }
+            
+            JOptionPane.showMessageDialog(rep,
+                "Cargando: " + dp.nombrePartida[idx]);
 
-        JScrollPane scrollRanking = new JScrollPane(txtRanking);
-        scrollRanking.setBounds(20, 90, 500, 180);
-        rep.add(scrollRanking);
+            game g = new game(
+                dp.jugadores[dp.Jactual].getNombre(),
+                "Oponente"
+            );
 
-        // ─── MIS ÚLTIMOS PARTIDOS ───────────────────────────
-        JLabel lblLogs = new JLabel("MIS ÚLTIMOS PARTIDOS");
-        lblLogs.setBounds(20, 285, 250, 25);
-        lblLogs.setFont(new Font("Arial", Font.BOLD, 14));
-        lblLogs.setForeground(Color.WHITE);
-        rep.add(lblLogs);
+           
+            g.cargarTablero(
+                dp.partidasGuardadas[idx],
+                dp.turnoGuardado[idx],
+                dp.nombrePartida[idx]
+            );
 
-        JTextArea txtLogs = new JTextArea();
-        txtLogs.setEditable(false);
-        txtLogs.setFont(new Font("Courier New", Font.PLAIN, 12));
-        txtLogs.setBackground(new Color(240, 240, 240));
-
-        
-        String[] misLogs = dp.jugadores[dp.Jactual].getLog();
-        int total= dp.jugadores[dp.Jactual].getTotal();
-
-        if (total == 0) {
-            txtLogs.append("No hay partidos registrados aún.");
-        } else {
-            for (int i = total - 1; i >= 0; i--) { // 👈 Del más reciente al más viejo
-                txtLogs.append((total - i) + ". " + misLogs[i] + "\n");
-                txtLogs.append("─────────────────────────────────────────\n");
-            }
-        }
-
-        JScrollPane scrollLogs = new JScrollPane(txtLogs);
-        scrollLogs.setBounds(20, 315, 500, 230);
-        rep.add(scrollLogs);
-
-        // ─── BOTÓN REGRESAR ─────────────────────────────────
-        JButton regresar = new JButton("REGRESAR");
-        regresar.setBounds(200, 560, 120, 35);
-        regresar.addActionListener(e -> {
             rep.dispose();
-        });
-        rep.add(regresar);
 
-        Image img = new ImageIcon("src/ajedrez_chino/Image/FotoAjedrez.png").getImage();
-        Image imgE = img.getScaledInstance(560, 680, Image.SCALE_SMOOTH);
-        JLabel fondo = new JLabel(new ImageIcon(imgE));
-        fondo.setBounds(0, 0, 560, 680);
-        rep.add(fondo);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(rep, "Ingrese un número válido");
+        }
+    });
+    rep.add(btnCargar);
 
-        rep.setVisible(true);
-    }
+    
+    JButton regresar = new JButton("REGRESAR");
+    regresar.setBounds(200, 610, 120, 35);
+    regresar.addActionListener(e -> rep.dispose());
+    rep.add(regresar);
+
+    Image img = new ImageIcon("src/ajedrez_chino/Image/FotoAjedrez.png").getImage();
+    Image imgE = img.getScaledInstance(560, 750, Image.SCALE_SMOOTH);
+    JLabel fondo = new JLabel(new ImageIcon(imgE));
+    fondo.setBounds(0, 0, 560, 750);
+    rep.add(fondo);
+
+    rep.setVisible(true);
+}
 }

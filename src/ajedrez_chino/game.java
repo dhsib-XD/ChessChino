@@ -124,6 +124,37 @@ public class game {
         JScrollPane scrollA = new JScrollPane(cajaAzules);
         scrollA.setBounds(panelX, 265, 150, 180);
         tab.add(scrollA);
+        
+        JButton btnGuardar = new JButton("GUARDAR");
+btnGuardar.setBounds(panelX, 520, 150, 40);
+btnGuardar.setBackground(new Color(0, 150, 0));
+btnGuardar.setForeground(Color.WHITE);
+btnGuardar.setFont(new Font("Arial", Font.BOLD, 12));
+btnGuardar.addActionListener(e -> {
+
+   
+    String nombre = JOptionPane.showInputDialog(tab, "Ingrese nombre para guardar la partida:");
+    if (nombre == null || nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(tab, "Debe ingresar un nombre");
+        return;
+    }
+
+    
+    int idx = dp.tpd;
+    dp.nombrePartida[idx]  = nombre + " (" + jugadorBlanco + " vs " + jugadorAzul + ")";
+    dp.turnoGuardado[idx]  = turns;
+
+    
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 9; j++) {
+            dp.partidasGuardadas[idx][i][j] = fichas[i][j];
+        }
+    }
+
+    dp.tpd++;
+    JOptionPane.showMessageDialog(tab, "¡Partida guardada!");
+});
+tab.add(btnGuardar);
 
         JButton btnRendir = new JButton("RENDIRSE");
         btnRendir.setBounds(panelX, 470, 150, 40);
@@ -330,4 +361,196 @@ public class game {
             btn.setBackground(new Color(240, 230, 180));
         }
     }
+    
+    public void cargarTablero(cdp[][] fichasGuardadas, boolean turno, String nombre) {
+    turns = turno;
+
+    JFrame tab = new JFrame("Ajedrez Chino - " + nombre);
+    tab.setSize(780, 750);
+    tab.setLayout(null);
+    tab.setLocationRelativeTo(null);
+    tab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    int[] seleccion    = {-1, -1};
+    cdp[][] fichas      = new cdp[10][9];
+    JButton[][] botones = new JButton[10][9];
+
+   
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 9; j++) {
+            fichas[i][j] = fichasGuardadas[i][j];
+        }
+    }
+
+    final int col  = 9;
+    final int fila = 10;
+    final int X    = 40;
+    final int Y    = 60;
+    final int size = 55;
+    final int Vrio = 5;
+
+    JLabel lblTurno = new JLabel("Turno: " + (turns ? jugadorBlanco + " (Blancas)" : jugadorAzul + " (Azules)"), JLabel.CENTER);
+    lblTurno.setBounds(X, 5, col * size, 30);
+    lblTurno.setFont(new Font("Arial", Font.BOLD, 14));
+    tab.add(lblTurno);
+
+    int panelX = X + (col * size) + 15;
+
+    JTextArea cajaBlancos = new JTextArea();
+    cajaBlancos.setEditable(false);
+    cajaBlancos.setBackground(new Color(255, 255, 200));
+    JScrollPane scrollB = new JScrollPane(cajaBlancos);
+    scrollB.setBounds(panelX, 55, 150, 180);
+    tab.add(scrollB);
+
+    JTextArea cajaAzules = new JTextArea();
+    cajaAzules.setEditable(false);
+    cajaAzules.setBackground(new Color(200, 220, 255));
+    JScrollPane scrollA = new JScrollPane(cajaAzules);
+    scrollA.setBounds(panelX, 265, 150, 180);
+    tab.add(scrollA);
+
+    JButton btnRendir = new JButton("RENDIRSE");
+    btnRendir.setBounds(panelX, 470, 150, 40);
+    btnRendir.setBackground(Color.RED);
+    btnRendir.setForeground(Color.WHITE);
+    btnRendir.addActionListener(e -> {
+        String seRinde = turns ? jugadorBlanco : jugadorAzul;
+        String gana    = turns ? jugadorAzul   : jugadorBlanco;
+        int confirm = JOptionPane.showConfirmDialog(tab,
+            seRinde + " ¿deseas rendirte?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            String msg = seRinde + " SE HA RETIRADO, FELICIDADES " + gana + ", HAS GANADO 3 PUNTOS";
+            JOptionPane.showMessageDialog(tab, msg);
+            guardarLog(jugadorBlanco, msg);
+            guardarLog(jugadorAzul, msg);
+            darPuntos(gana, 3);
+            tab.dispose();
+            Menu m = new Menu();
+            m.menuj();
+        }
+    });
+    tab.add(btnRendir);
+
+    for (int j = 0; j < col; j++) {
+        JLabel rio = new JLabel();
+        rio.setBounds(X + (j * size), Y + (Vrio * size), size, size);
+        rio.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
+        rio.setBackground(new Color(100, 180, 255));
+        rio.setOpaque(true);
+        tab.add(rio);
+    }
+
+    for (int i = 0; i < fila; i++) {
+        int visualRow = (i < 5) ? i : i + 1;
+
+        for (int j = 0; j < col; j++) {
+            JButton cel = new JButton();
+            cel.setBounds(X + (j * size), Y + (visualRow * size), size, size);
+            cel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+            cel.setOpaque(true);
+            cel.setFocusPainted(false);
+
+            botones[i][j] = cel;
+            final int fi = i;
+            final int fj = j;
+
+            if ((i + j) % 2 == 0) {
+                cel.setBackground(new Color(0, 120, 0));
+            } else {
+                cel.setBackground(new Color(240, 230, 180));
+            }
+
+            if (i <= 2 && j >= 3 && j <= 5) cel.setBackground(Color.RED);
+            if (i >= 7 && j >= 3 && j <= 5) cel.setBackground(Color.YELLOW);
+
+            if (fichas[i][j] != null) {
+                Image img = fichas[i][j].getImagen().getImage();
+                Image imgE = img.getScaledInstance(size - 5, size - 5, Image.SCALE_SMOOTH);
+                cel.setIcon(new ImageIcon(imgE));
+            }
+
+            cel.addActionListener(e -> {
+                if (seleccion[0] == -1) {
+                    if (fichas[fi][fj] == null) return;
+                    if (fichas[fi][fj].Team() != turns) {
+                        JOptionPane.showMessageDialog(tab, "No es tu turno");
+                        return;
+                    }
+                    seleccion[0] = fi;
+                    seleccion[1] = fj;
+                    cel.setBackground(Color.CYAN);
+                } else {
+                    int a = seleccion[0];
+                    int b = seleccion[1];
+
+                    if (a == fi && b == fj) {
+                        restaurarColor(botones[a][b], a, b);
+                        seleccion[0] = -1;
+                        seleccion[1] = -1;
+                        return;
+                    }
+
+                    if (fichas[fi][fj] != null && fichas[fi][fj].Team() == fichas[a][b].Team()) {
+                        JOptionPane.showMessageDialog(tab, "No puedes capturar tu propia ficha");
+                        restaurarColor(botones[a][b], a, b);
+                        seleccion[0] = -1;
+                        seleccion[1] = -1;
+                        return;
+                    }
+
+                    if (fichas[a][b].vmove(fi, fj, fichas)) {
+                        if (fichas[fi][fj] != null) {
+                            if (fichas[fi][fj].Team()) {
+                                cajaBlancos.append("- " + fichas[fi][fj].getNom() + "\n");
+                            } else {
+                                cajaAzules.append("- " + fichas[fi][fj].getNom() + "\n");
+                            }
+                        }
+
+                        fichas[fi][fj] = fichas[a][b];
+                        fichas[fi][fj].mover(fi, fj);
+                        fichas[a][b] = null;
+
+                        Image img = fichas[fi][fj].getImagen().getImage();
+                        Image imgE = img.getScaledInstance(size - 5, size - 5, Image.SCALE_SMOOTH);
+                        botones[fi][fj].setIcon(new ImageIcon(imgE));
+                        botones[a][b].setIcon(null);
+
+                        if (verificarGanador(fichas)) {
+                            String gana   = turns ? jugadorBlanco : jugadorAzul;
+                            String pierde = turns ? jugadorAzul   : jugadorBlanco;
+                            String msg    = "JUGADOR " + gana + " VENCIÓ A " + pierde +
+                                            ", FELICIDADES HAS GANADO 3 PUNTOS";
+                            JOptionPane.showMessageDialog(tab, msg);
+                            guardarLog(jugadorBlanco, msg);
+                            guardarLog(jugadorAzul, msg);
+                            darPuntos(gana, 3);
+                            tab.dispose();
+                            Menu m = new Menu();
+                            m.menuj();
+                            return;
+                        }
+
+                        turns = !turns;
+                        lblTurno.setText("Turno: " +
+                            (turns ? jugadorBlanco + " (Blancas)"
+                                   : jugadorAzul   + " (Azules)"));
+
+                    } else {
+                        JOptionPane.showMessageDialog(tab, "Movimiento invalido");
+                    }
+
+                    restaurarColor(botones[a][b], a, b);
+                    seleccion[0] = -1;
+                    seleccion[1] = -1;
+                }
+            });
+
+            tab.add(cel);
+        }
+    }
+
+    tab.setVisible(true);
+}
 }
