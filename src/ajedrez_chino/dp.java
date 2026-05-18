@@ -22,7 +22,7 @@ public class dp {
         nu.setSize(500, 500);
         nu.setLocationRelativeTo(null);
         nu.setLayout(null);
-        nu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ✅ agregado
+        nu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
         JLabel tt = new JLabel("NUEVO USUARIO");
         tt.setBounds(150, 50, 200, 50);
