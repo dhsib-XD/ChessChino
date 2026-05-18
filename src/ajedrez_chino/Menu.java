@@ -104,8 +104,9 @@ public class Menu extends dp {
         JButton bl = new JButton("LOG OUT");
         bl.setBounds(210, 380, 120, 40);
         bl.addActionListener(e -> {
-            me.menui();
             inicio.dispose();
+            me.menui();
+            
         });
 
         inicio.add(titulo);
